@@ -1,0 +1,8 @@
+CDK/node_modules
+sourceCode/__pycache__
+CDK/lib/*.d.ts
+CDK/*.js
+CDK/lib/*.js
+CDK/bin/*.d.ts
+CDK/bin/*.js
+CDK/cdk.out

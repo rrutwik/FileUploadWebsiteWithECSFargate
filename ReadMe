@@ -1,0 +1,6 @@
+Steps To Set up FileUploadWebsite using ECS Fargate:-
+1) Set up AWSCLI and docker on your computer.
+1.1) Change route53 config or remove it if you don't need it, as website can be accessed by loadbalancer dns name.
+2) cdk synth && cdk deploy
+3) Go to AWS console , then ec2, then loadbalancer and then check for loadbalancer dnsName(websiteURL).
+4) You can access website with loadbalancerDnsName.
