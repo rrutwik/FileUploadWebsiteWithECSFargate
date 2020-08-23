@@ -7,7 +7,7 @@ export class VPCStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     const vpc = new ec2.Vpc(this, "FileUploadWebsiteVpc", {
-      maxAzs: 1
+      maxAzs: 3
     });
 
     this.cluster = new ecs.Cluster(this, "FileUploadWebsiteCluster", {
