@@ -14,10 +14,10 @@ export class WebPageStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props: serviceProps) {
         super(scope, id, props);
         const s3Bucket = new s3.Bucket(this, 'FileBucket');
-        const service = new ecs_patterns.NetworkLoadBalancedEc2Service(this, "EC2Service", {
+        const service = new ecs_patterns.ApplicationLoadBalancedEc2Service(this, "EC2Service", {
         cluster: props.cluster,
         desiredCount: 1,
-        publicLoadBalancer: false,
+        publicLoadBalancer: true,
         taskImageOptions: {
             image: ecs.ContainerImage.fromAsset("../sourceCode"),
             containerPort: 8081,
@@ -29,7 +29,6 @@ export class WebPageStack extends cdk.Stack {
         cpu: 1
         });
         s3Bucket.grantReadWrite(service.taskDefinition.taskRole);
-
         // Friendly Name To Access website
         const zone = route53.HostedZone.fromHostedZoneAttributes(this, 'MyZone', {
           zoneName: 'aws.rutwikpatel.com',
