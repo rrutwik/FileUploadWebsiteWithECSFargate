@@ -14,7 +14,7 @@ export class WebPageStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props: serviceProps) {
         super(scope, id, props);
         const s3Bucket = new s3.Bucket(this, 'FileBucket');
-        const service = new ecs_patterns.ApplicationLoadBalancedEc2Service(this, "EC2Service", {
+        const service = new ecs_patterns.ApplicationLoadBalancedFargateService(this, "EC2Service", {
         cluster: props.cluster,
         desiredCount: 1,
         publicLoadBalancer: true,
@@ -26,7 +26,7 @@ export class WebPageStack extends cdk.Stack {
             }
         },
         memoryLimitMiB: 512,
-        cpu: 1
+        cpu: 256
         });
         s3Bucket.grantReadWrite(service.taskDefinition.taskRole);
         // Friendly Name To Access website

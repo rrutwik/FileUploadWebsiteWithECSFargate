@@ -15,9 +15,5 @@ export class VPCStack extends cdk.Stack {
       containerInsights: true,
       vpc: vpc
     });
-    const ec2Type = new ec2.InstanceType("t2.micro");
-    this.cluster.addCapacity("ec2Instance", {
-      instanceType: ec2Type
-    });
   }
 }
