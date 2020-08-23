@@ -12,16 +12,12 @@ export interface serviceProps extends cdk.StackProps {
 
 export class WebPageStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props: serviceProps) {
-      super(scope, id, props);
-        const ec2Type = new ec2.InstanceType("t2.micro");
-        props.cluster.addCapacity("ec2Instance", {
-          instanceType: ec2Type
-        });
+        super(scope, id, props);
         const s3Bucket = new s3.Bucket(this, 'FileBucket');
-        const service = new ecs_patterns.ApplicationLoadBalancedEc2Service(this, "EC2Service", {
+        const service = new ecs_patterns.NetworkLoadBalancedEc2Service(this, "EC2Service", {
         cluster: props.cluster,
         desiredCount: 1,
-        publicLoadBalancer: true,
+        publicLoadBalancer: false,
         taskImageOptions: {
             image: ecs.ContainerImage.fromAsset("../sourceCode"),
             containerPort: 8081,
@@ -30,7 +26,7 @@ export class WebPageStack extends cdk.Stack {
             }
         },
         memoryLimitMiB: 512,
-        cpu: 5
+        cpu: 1
         });
         s3Bucket.grantReadWrite(service.taskDefinition.taskRole);
 
